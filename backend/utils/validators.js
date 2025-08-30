@@ -1,3 +1,4 @@
+// validators.js
 const {body} = require('express-validator');
 const User=require('../models/User');
 
@@ -22,9 +23,16 @@ const validateLogin = [
   body('password').notEmpty().withMessage('Password is required'),
 ];
 
+const validateProfileUpdate = [
+  body('name').optional().notEmpty().withMessage('Name cannot be empty'),
+  body('email').optional().isEmail().withMessage('Valid email is required'),
+  // Add other profile fields validations as needed
+];
+
 module.exports = {
   validateRegister,
   validateLogin,
+  validateProfileUpdate
 };
 
 

@@ -1,27 +1,22 @@
 const express=require("express")
 const router=express.Router();
 
-const { validateRegister,validateLogin}=require ('../utils/validators')
+const { validateRegister,validateLogin,validateProfileUpdate}=require ('../utils/validators')
 const {validateRequest}=require ('../middleware/validation')
+const authController = require('../controllers/authController');
+const auth=require('../middleware/auth')
 
 
 // considering the body is validated on middleware
-router.post("/api/auth/register",validateRegister,validateRequest,(req,res)=>{
+router.post("/register",validateRegister,validateRequest,authController.register)
 
-})
+router.post('/login', validateLogin, validateRequest, authController.login);
 
-router.post("/api/auth/login",validateLogin,validateRequest,(req,res)=>{
-    
-})
+router.post('/logout', auth, authController.logout);
 
-router.post("/api/auth/logout",(req,res)=>{
+router.get('/profile', auth, authController.getProfile);
+
+router.put('/profile', auth, validateProfileUpdate, validateRequest, authController.updateProfile);
     
-})
-router.get("/api/auth/profile",(req,res)=>{
-    
-})
-router.put("/api/auth/profile",(req,res)=>{
-    
-})
 
 module.exports =router;
