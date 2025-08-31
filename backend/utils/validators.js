@@ -29,10 +29,56 @@ const validateProfileUpdate = [
   // Add other profile fields validations as needed
 ];
 
+const validateListing = [
+  body('title')
+    .notEmpty().withMessage('Title is required')
+    .isLength({ max: 100 }).withMessage('Title can be max 100 characters'),
+
+  body('description')
+    .notEmpty().withMessage('Description is required')
+    .isLength({ max: 1000 }).withMessage('Description can be max 1000 characters'),
+
+  body('pricePerNight')
+    .notEmpty().withMessage('Price per night is required')
+    .isFloat({ gt: 0 }).withMessage('Price must be a positive number'),
+
+  body('address')
+    .notEmpty().withMessage('Address is required'),
+
+  body('city')
+    .notEmpty().withMessage('City is required'),
+
+  body('state')
+    .optional()
+    .isLength({ max: 50 }).withMessage('State can be max 50 characters'),
+
+  body('country')
+    .optional()
+    .isLength({ max: 50 }).withMessage('Country can be max 50 characters'),
+
+  body('zipCode')
+    .optional()
+    .isPostalCode('any').withMessage('Invalid zip/postal code'),
+
+  body('amenities')
+    .optional()
+    .isArray().withMessage('Amenities must be an array'),
+
+  body('amenities.*')
+    .optional()
+    .isString().withMessage('Each amenity must be a string'),
+
+  body('availability')
+    .optional()
+    .isBoolean().withMessage('Availability must be a boolean'),
+];
+
+
 module.exports = {
   validateRegister,
   validateLogin,
-  validateProfileUpdate
+  validateProfileUpdate,
+  validateListing
 };
 
 
