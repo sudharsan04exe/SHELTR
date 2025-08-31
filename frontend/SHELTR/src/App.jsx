@@ -1,12 +1,12 @@
 import { useState } from 'react'
+import AuthForm from './components/forms/AuthForm'
 
-import './App.css'
 
 function App() {
 
   return (
     <>
-      
+      <AuthForm></AuthForm>
     </>
   )
 }
