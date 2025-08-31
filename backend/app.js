@@ -7,6 +7,7 @@ const listingroutes=require("./routes/listings")
 
 
 const app=express();
+app.use(express.json());
 
 app.use("/api/auth",authroute);
 app.use("/api/users",userroutes);

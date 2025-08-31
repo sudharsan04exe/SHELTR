@@ -1,3 +1,4 @@
+// listingcontroller.js
 
 const Listing=require('../models/Listings')
 
@@ -14,9 +15,10 @@ exports.createListing = async (req, res) => {
       location: {
         address: req.body.address,
         city: req.body.city,
-        state: req.body.state,
-        country: req.body.country,
-        zipCode: req.body.zipCode,
+        // state: req.body.state,
+        // country: req.body.country,
+        // zipCode: req.body.zipCode,
+
       },
       images: imagePaths,
       amenities: req.body.amenities, // Should be array from frontend
@@ -63,9 +65,9 @@ exports.updateListing = async (req, res) => {
     if (req.body.pricePerNight) listing.pricePerNight = req.body.pricePerNight;
     if (req.body.address) listing.location.address = req.body.address;
     if (req.body.city) listing.location.city = req.body.city;
-    if (req.body.state) listing.location.state = req.body.state;
-    if (req.body.country) listing.location.country = req.body.country;
-    if (req.body.zipCode) listing.location.zipCode = req.body.zipCode;
+    // if (req.body.state) listing.location.state = req.body.state;
+    // if (req.body.country) listing.location.country = req.body.country;
+    // if (req.body.zipCode) listing.location.zipCode = req.body.zipCode;
     if (req.body.amenities) listing.amenities = req.body.amenities;
     if (req.body.availability !== undefined) listing.availability = req.body.availability;
 

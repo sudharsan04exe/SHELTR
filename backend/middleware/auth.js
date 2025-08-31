@@ -1,11 +1,11 @@
-// 
+// auth.js
 const jwt = require('jsonwebtoken');
 
 const auth = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Authorization token is missing' });
+    return res.status(401).json({ message: 'Authorization token is missing or invalid token'});
   }
 
   const token = authHeader.split(' ')[1];

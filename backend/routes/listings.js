@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 const { validateListing } = require('../utils/validators');
 const { validateRequest } = require('../middleware/validation');
 const upload = require('../middleware/upload');
-
+const authorizeVendorOrAdmin=require("../middleware/authorize")
 
 const router=express.Router();
 
@@ -12,7 +12,7 @@ const router=express.Router();
 
 
 // vendor accessible
-router.post('/',auth,upload.array('images'),validateListing,validateRequest,listingController.createListing)
+router.post('/',auth,authorizeVendorOrAdmin,upload.array('images'),validateListing,validateRequest,listingController.createListing)
 // public accessible
 router.get('/', listingController.getAllListings);
 
@@ -21,12 +21,13 @@ router.get('/:id', listingController.getListingById);
 
 // Update a listing (Vendor only, can upload new images)
 router.put(
-  '/:id',auth,upload.array('images'),validateListing,validateRequest, listingController.updateListing);
+  '/:id',auth,authorizeVendorOrAdmin,upload.array('images'),validateListing,validateRequest, listingController.updateListing);
 
 // Delete a listing (Vendor only)
 router.delete(
   '/:id',
-  auth,                  // Require authentication
+  auth,
+  authorizeVendorOrAdmin,                  // Require authentication
   listingController.deleteListing
 );
 
