@@ -21,13 +21,7 @@ router.get('/:id', listingController.getListingById);
 
 // Update a listing (Vendor only, can upload new images)
 router.put(
-  '/:id',
-  auth,                  // Require authentication
-  upload.array('images'), // Upload images
-  validateListing,        // Validate fields
-  validateRequest,
-  listingController.updateListing
-);
+  '/:id',auth,upload.array('images'),validateListing,validateRequest, listingController.updateListing);
 
 // Delete a listing (Vendor only)
 router.delete(
