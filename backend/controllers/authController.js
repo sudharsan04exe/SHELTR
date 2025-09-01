@@ -12,7 +12,9 @@ exports.register =async(req,res)=>{
         const existinguser= await User.findOne({email});
         if(existinguser)return res.status(400).json({message:'email already registered'});
 
-        const user =new User({name,email,password,role});
+        const hashedPassword=await bcrypt.hash(password,10);
+
+        const user =new User({name,email,password:hashedPassword,role});
         await user.save();
 
         // generate token
@@ -42,7 +44,7 @@ exports.login = async (req,res)=>{
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid password' });
+    if (!isMatch) return res.status(400).json({ message: 'Invalid passwordxx' });
 
     // Generate JWT token
     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });

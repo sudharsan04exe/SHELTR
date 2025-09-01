@@ -72,13 +72,36 @@ const validateListing = [
     .optional()
     .isBoolean().withMessage('Availability must be a boolean'),
 ];
+const validateBooking = [
+  body('listing')
+    .notEmpty().withMessage('Listing ID is required')
+    .isMongoId().withMessage('Listing ID must be a valid MongoDB ObjectId'),
 
+  body('checkIn')
+    .notEmpty().withMessage('Check-in date is required')
+    .isISO8601().withMessage('Check-in must be a valid date'),
+
+  body('checkOut')
+    .notEmpty().withMessage('Check-out date is required')
+    .isISO8601().withMessage('Check-out must be a valid date')
+    .custom((value, { req }) => {
+      if (new Date(value) <= new Date(req.body.checkIn)) {
+        throw new Error('Check-out date must be after check-in date');
+      }
+      return true;
+    }),
+
+  body('totalPrice')
+    .notEmpty().withMessage('Total price is required')
+    .isFloat({ gt: 0 }).withMessage('Total price must be a positive number'),
+];
 
 module.exports = {
   validateRegister,
   validateLogin,
   validateProfileUpdate,
-  validateListing
+  validateListing,
+  validateBooking
 };
 
 
